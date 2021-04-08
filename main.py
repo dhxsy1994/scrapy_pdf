@@ -12,15 +12,25 @@ from config import settings
 """
 
 
-def downloadFile(download_links):
+def downloadFile(download_links, download_dir):
     """
     download files
     :param download_links:
     :return:
     """
+
     print("====={:^20}=====".format("Stared Downloading"))
-    print(download_links)
-    print("====={:^20}=====".format("Over Download"))
+    for link in download_links:
+        savePostition = download_dir + link.split('/')[-1]
+        r = requests.get(link, stream=True)
+        with open(savePostition, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
+        print("{}".format(link))
+
+    print("====={:^20}=====".format("Over Downloads"))
 
 
 def analyzeLink_PDF(root_link, link_start):
@@ -47,13 +57,15 @@ def analyzeLink_PDF(root_link, link_start):
     if r.status_code == 200:
         soup = BeautifulSoup(r.text, "html5lib")
 
-        index = 1
+        index = 0
         a_tags = soup.find_all("a")
         for tag in a_tags:
             linkEnd = tag.get('href')
             if linkEnd.endswith('.pdf'):
                 targetLinks.append(link_start + linkEnd)
-            index += 1
+                index += 1
+    else:
+        print("Error, link failed ?")
 
     print("Toatal links {:<5d}".format(index))
     return targetLinks
@@ -64,5 +76,7 @@ if __name__ == "__main__":
     # load config
     root_link = settings.root_link
     link_start = settings.link_start
+    local_download_dir = settings.download_local_dir
+    # download
     dLinks = analyzeLink_PDF(root_link, link_start)
-    downloadFile(dLinks)
+    downloadFile(dLinks, local_download_dir)
