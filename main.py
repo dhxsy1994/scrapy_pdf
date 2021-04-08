@@ -76,7 +76,6 @@ def analyzeLink_PDF(root_link, link_start):
 
     print("Total links {:<5d}".format(index))
     return targetLinks
-    # print(index)
 
 
 if __name__ == "__main__":
@@ -84,6 +83,8 @@ if __name__ == "__main__":
     root_link = settings.root_link
     link_start = settings.link_start
     local_download_dir = settings.download_local_dir
+
+    # check download dir exist or not
     if os.path.isdir(local_download_dir) is not True:
         os.mkdir(local_download_dir)
 
