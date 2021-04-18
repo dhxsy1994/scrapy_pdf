@@ -35,7 +35,7 @@ def downloadFile(download_links, download_dir):
 
 
 def analyzeLink_PDF(root_link, link_start):
-    """
+    """ TODO: template this func
     analyze root link, parse the PDF address
     :param root_link: the PDFs website
     :param link_start: web server https address header [Https://xxxx]
