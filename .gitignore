@@ -2,4 +2,5 @@
 # Ignore dynaconf secret files
 .secrets.*
 *.pyc
+__pycache__
 .idea
