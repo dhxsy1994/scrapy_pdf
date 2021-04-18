@@ -23,9 +23,10 @@ class Fetcher(object):
         :param repeat_time: repeat times
         :param priority:
         :return:
-            fetch_state can be -1(fetch failed), 0(need repeat), 1(fetch success)
+            fetch_state:
+                can be -1(fetch failed), 0(need repeat), 1(fetch success)
             content:
-             which waits to be parsed, can be any object, or exception[class_name, err]
+                which waits to be parsed, can be any object, or exception[class_name, err]
         """
         time.sleep(self._sleep_interval)
         try:
@@ -39,9 +40,6 @@ class Fetcher(object):
     def fetch_url(self, url: str, repeat_time: int, priority: int):
         """
         need override this func, otherwise raise error
-        :param url:
-        :param repeat_time:
-        :param priority:
-        :return:
+        :return: fetch_state, content
         """
-        raise NotImplemented("Error, fetch_url not implement.")
+        raise NotImplementedError
