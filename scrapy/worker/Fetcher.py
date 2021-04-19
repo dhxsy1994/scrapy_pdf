@@ -27,6 +27,7 @@ class Fetcher(object):
                 can be -1(fetch failed), 0(need repeat), 1(fetch success)
             content:
                 which waits to be parsed, can be any object, or exception[class_name, err]
+                The content could include the http status code
         """
         time.sleep(self._sleep_interval)
         try:
@@ -40,6 +41,9 @@ class Fetcher(object):
     def fetch_url(self, url: str, repeat_time: int, priority: int):
         """
         need override this func, otherwise raise error
-        :return: fetch_state, content
+        the content design with status code
+        :return:
+            fetch_state: the state of fetch
+            content: (response.status_code, response.url, response.text)
         """
         raise NotImplementedError
