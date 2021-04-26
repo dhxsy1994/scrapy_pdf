@@ -1,4 +1,3 @@
-import time
 
 
 class Parser(object):
@@ -11,6 +10,7 @@ class Parser(object):
         :param max_deep:
         """
         self._max_deep = max_deep
+        return
 
     def running(self, url: str, content: object, deep: int, priority: int) -> (int, list, object):
         """
@@ -30,6 +30,8 @@ class Parser(object):
     def parse_html(self, url: str, content: object, deep: int, priority: int):
         """
         parse the content of url, must override this func
+        content: fetcher return object, contain a web page
+        deep: the page depth
         :return:
             The return item will more flexible, we can define a web content data item like:
                 {"url": url, "title": title.group("title").strip(), "datetime": datetime.datetime.now()}

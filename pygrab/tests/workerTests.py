@@ -2,7 +2,7 @@ import unittest
 from bs4 import BeautifulSoup
 import datetime
 import requests
-from scrapy import worker
+from pygrab import worker
 
 
 class TestFetcher(worker.Fetcher):
@@ -17,21 +17,18 @@ class TestFetcher(worker.Fetcher):
 
 
 class TestParser(worker.Parser):
-    def parse_html(self, url: str, content: object, deep: int, priority: int):
+    def parse_html(self, url: str, web_content: object, deep: int, priority: int):
         """
         Parser imp
-        :param url:
-        :param content:
-        :param deep:
-        :param priority:
-        :return:
         """
-        status_code, url_now, html_text = content
+        status_code, url_now, html_text = web_content
         soup = BeautifulSoup(html_text, "html5lib")
 
         target_links = []
         link_start = "https://pdos.csail.mit.edu/6.824/"
-        # TODO crawl the pdf process not 100% right
+
+        # TODO: crawl the pdf process not 100% right
+        # if the a content is empty ?
         index = 0
         a_tags = soup.find_all("a")
         for tag in a_tags:
